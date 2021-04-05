@@ -1,0 +1,54 @@
+### Create a build
+
+```
+Example Request
+```
+
+```shell
+curl "https://api.example.org/v3/builds" \
+  -X POST \
+  -H "Authorization: bearer [token]" \
+  -H "Content-type: application/json" \
+  -d '{
+    "package": {
+       "guid": "[package-guid]"
+    }
+  }'
+```
+
+```
+Example Response
+```
+
+```http
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+<%= yield_content :single_staging_build %>
+```
+
+#### Definition
+`POST /v3/builds`
+
+#### Required parameters
+
+Name | Type | Description
+---- | ---- | -----------
+**package** | _object_ | App package to stage |
+
+#### Optional parameters
+
+Name | Type | Description | Default
+---- | ---- | ----------- | -------
+**lifecycle** | [_lifecycle object_](#the-lifecycle-object) | Lifecycle information for a build | lifecycle on the app
+**staging_memory_in_mb** | _integer_ | Memory in MB allocated for staging of the build
+**staging_disk_in_mb** | _integer_ | Disk space in MB allocated for staging of the build
+**metadata.labels** | [_label object_](#labels) | Labels applied to the build
+**metadata.annotations**  | [_annotation object_](#annotations) | Annotations applied to the build
+
+#### Permitted roles
+ |
+--- | ---
+Admin |
+Space Developer |
+

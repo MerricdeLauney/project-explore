@@ -1,0 +1,38 @@
+## Updating Actual State
+
+The Cloud Controller is primarily responsible for the desired state of apps and processes. Most endpoints will
+only update the desired states of your apps and processes within Cloud Controller in order
+to provide users with the opportunity to incur zero downtime when updating apps. Restarting
+the app will be required for the desired state changes to become the actual state.
+
+The [stats endpoint](#get-stats-for-a-process) can be used at any time to determine the actual
+(running) state of a process, and by proxy, an app.
+
+#### Endpoints that will affect runtime
+
+The following endpoints will immediately impact the runtime of the app, and the desired changes will take effect without needing to [restart the app](#restart-an-app).
+
+|Endpoint|
+|------|
+|[`PATCH /v3/spaces/:guid/features/ssh`](#get-ssh-enabled-for-an-app)|
+|[`DELETE /v3/routes/:guid/destinations/:destination_guid`](#remove-destination-for-a-route)|
+
+The following endpoints will immediately impact runtime and take effect when **only** the `instances` field is updated. If any other fields are updated, the app will need to be restarted in order for any desired changes to take effect, including instance count changes.
+
+|Endpoint|
+|------|
+|[`POST /v3/processes/:guid/actions/scale`](#scale-a-process)|
+|[`POST /v3/apps/:guid/processes/:type/actions/scale`](#scale-a-process)|
+
+The following endpoints will immediately impact runtime and the desired changes will take effect if the specified fields are **not** included in the request.
+
+If the field is specified, the app will need to be restarted in order for any desired changes to take effect.
+
+|Endpoint| Changes requiring a restart|
+|------|------|
+|[`POST /v3/routes/:guid/destinations`](#insert-destinations-for-a-route)| Adding a destination with a port|
+|[`PATCH /v3/routes/:guid/destinations`](#replace-all-destinations-for-a-route)| Replacing the port field <br/> <br/>  *Note: If the port is specified, this endpoint will unmap any route not listed in the body but will not map any of the new routes in the request body. For this reason we caution against using the endpoint in most circumstances. A combination of [adding ports](#insert-destinations-for-a-route) and [removing ports](#remove-destination-for-a-route) will better fit most use cases.*|
+
+All other changes will not take effect on running apps until they are restarted.
+
+

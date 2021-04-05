@@ -1,0 +1,50 @@
+### List domains for an organization
+
+```
+Example Request
+```
+
+```shell
+curl "https://api.example.org/v3/organizations/[guid]/domains" \
+  -X GET \
+  -H "Authorization: bearer [token]"
+```
+
+```
+Example Response
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+<%= yield_content :paginated_list_of_domains, '/v3/organizations/:org_guid/domains' %>
+```
+
+Retrieve all domains available in an organization for the current user. This will return unscoped domains
+(those without an owning organization), domains that are scoped to the given organization (owned by the given
+organization), and domains that have been shared with the organization.
+
+To retrieve the default domain for an organization, use the [get default domain](#get-default-domain) endpoint.
+
+#### Definition
+`GET /v3/organizations/:guid/domains`
+
+#### Query parameters
+
+| Name                   | Type              | Description                                                                                                  |
+| ------------           | ---------         | -----------                                                                                                  |
+| **guids**              | _list of strings_ | Comma-delimited list of guids to filter by                                                           |
+| **names**              | _list of strings_ | Comma-delimited list of domain names to filter by                                                           |
+| **organization_guids** | _list of strings_ | Comma-delimited list of owning organization guids to filter by                                              |
+| **page**               | _integer_         | Page to display; valid values are integers >= 1                                                             |
+| **per_page**           | _integer_         | Number of results per page; <br>valid values are 1 through 5000                                             |
+| **order_by**           | _string_          | Value to sort by. Defaults to ascending; prepend with `-` to sort descending<br>Valid values are `created_at`, `updated_at`
+| **label_selector** | _string_ | A query string containing a list of [label selector](#labels-and-selectors) requirements |
+
+#### Permitted roles
+
+    |
+--- | ---
+All Roles |
+

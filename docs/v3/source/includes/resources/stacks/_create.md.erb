@@ -1,0 +1,49 @@
+### Create a stack
+
+```
+Example Request
+```
+
+```shell
+curl "https://api.example.org/v3/stacks" \
+  -X POST \
+  -H "Authorization: bearer [token]" \
+  -H "Content-type: application/json" \
+  -d '{
+    "name": "my-stack",
+    "description": "Here is my stack!",
+  }'
+```
+
+```
+Example Response
+```
+
+```http
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+<%= yield_content :single_stack %>
+```
+
+#### Definition
+`POST /v3/stacks`
+
+#### Required parameters
+
+Name | Type | Description
+---- | ---- | -----------
+**name** | _string_ | Name of the stack; must be unique and no longer than 250 characters
+
+#### Optional parameters
+
+Name | Type | Description | Default
+---- | ---- | ----------- | -------
+**description** | _string_ | Description of the stack; must no longer than 250 characters | `null`
+**metadata.labels** | [_label object_](#labels) | Labels applied to the stack
+**metadata.annotations**  | [_annotation object_](#annotations) | Annotations applied to the stack
+
+#### Permitted roles
+ |
+--- | ---
+Admin |

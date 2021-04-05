@@ -1,0 +1,102 @@
+<% content_for :single_domain  do | metadata={} | %>
+{
+  "guid": "3a5d3d89-3f89-4f05-8188-8a2b298c79d5",
+  "created_at": "2019-03-08T01:06:19Z",
+  "updated_at": "2019-03-08T01:06:19Z",
+  "name": "test-domain.com",
+  "internal": false,
+  "router_group": null,
+  "supported_protocols": ["http"],
+  "metadata": {
+    "labels": <%= metadata.fetch(:labels, {}).to_json(space: ' ', object_nl: ' ')%>,
+    "annotations": <%= metadata.fetch(:annotations, {}).to_json(space: ' ', object_nl: ' ')%>
+  },
+  "relationships": {
+    "organization": {
+      "data": { "guid": "3a3f3d89-3f89-4f05-8188-751b298c79d5" }
+    },
+    "shared_organizations": {
+      "data": [
+        {"guid": "404f3d89-3f89-6z72-8188-751b298d88d5"},
+        {"guid": "416d3d89-3f89-8h67-2189-123b298d3592"}
+      ]
+    }
+  },
+  "links": {
+    "self": {
+      "href": "https://api.example.org/v3/domains/3a5d3d89-3f89-4f05-8188-8a2b298c79d5"
+    },
+    "organization": {
+      "href": "https://api.example.org/v3/organizations/3a3f3d89-3f89-4f05-8188-751b298c79d5"
+    },
+    "route_reservations": {
+      "href": "https://api.example.org/v3/domains/3a5d3d89-3f89-4f05-8188-8a2b298c79d5/route_reservations"
+    },
+    "shared_organizations": {
+      "href": "https://api.example.org/v3/domains/3a5d3d89-3f89-4f05-8188-8a2b298c79d5/relationships/shared_organizations"
+    }
+  }
+}
+ <% end %>
+
+<% content_for :paginated_list_of_domains do %>
+{
+  "pagination": {
+    "total_results": 3,
+    "total_pages": 2,
+    "first": {
+      "href": "https://api.example.org/v3/domains?page=1&per_page=2"
+    },
+    "last": {
+      "href": "https://api.example.org/v3/domains?page=2&per_page=2"
+    },
+    "next": {
+      "href": "https://api.example.org/v3/domains?page=2&per_page=2"
+    },
+    "previous": null
+  },
+  "resources": [
+    {
+      "guid": "3a5d3d89-3f89-4f05-8188-8a2b298c79d5",
+      "created_at": "2019-03-08T01:06:19Z",
+      "updated_at": "2019-03-08T01:06:19Z",
+      "name": "test-domain.com",
+      "internal": false,
+      "router_group": { "guid": "5806148f-cce6-4d86-7fbd-aa269e3f6f3f" },
+      "supported_protocols": ["tcp"],
+      "metadata": {
+        "labels": {},
+        "annotations": {}
+      },
+      "relationships": {
+        "organization": {
+          "data": null
+        },
+        "shared_organizations": {
+          "data": []
+        }
+      },
+      "links": {
+        "self": {
+          "href": "https://api.example.org/v3/domains/3a5d3d89-3f89-4f05-8188-8a2b298c79d5"
+        },
+        "route_reservations": {
+          "href": "https://api.example.org/v3/domains/3a5d3d89-3f89-4f05-8188-8a2b298c79d5/route_reservations"
+        },
+        "router_group": {
+          "href": "https://api.example.org/routing/v1/router_groups/5806148f-cce6-4d86-7fbd-aa269e3f6f3f"
+        }
+      }
+    },
+  ]
+}
+<% end %>
+
+<% content_for :shared_orgs do %>
+{
+  "data": [
+    {"guid": "404f3d89-3f89-6z72-8188-751b298d88d5"}
+    {"guid": "416d3d89-3f89-8h67-2189-123b298d3592"}
+  ]
+}
+<% end %>

@@ -1,0 +1,40 @@
+### Update an isolation segment
+
+```
+Example Request
+```
+
+```shell
+curl "https://api.example.org/v3/isolation_segments/[guid]" \
+  -X PATCH \
+  -H "Authorization: bearer [token]" \
+  -H "Content-type: application/json" \
+  -d '{ "name": "my_isolation_segment" }'
+```
+
+```
+Example Response
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+<%= yield_content :isolation_segment_with_name, 'my_isolation_segment' %>
+```
+
+#### Definition
+`PATCH /v3/isolation_segments/:guid`
+
+#### Optional parameters
+
+Name | Type | Description
+---- | ---- | -----------
+**name** | _string_ | Name of the isolation segment; isolation segment names must be unique across the entire system, and case is ignored when checking for uniqueness
+**metadata.labels** | [_label object_](#labels) | Labels applied to the isolation segment
+**metadata.annotations** | [_annotation object_](#annotations) | Annotations applied to the isolation segment
+
+#### Permitted roles
+ |
+--- | ---
+Admin |

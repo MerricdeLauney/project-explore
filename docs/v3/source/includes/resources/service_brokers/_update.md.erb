@@ -1,0 +1,86 @@
+### Update a service broker
+
+```
+Example Request
+```
+
+```shell
+curl "https://api.example.org/v3/service_brokers/[guid]" \
+  -X PATCH \
+  -H "Authorization: bearer [token]" \
+  -H "Content-type: application/json" \
+  -d '{
+    "name": "my_service_broker",
+    "url": "https://example.service-broker.com",
+    "authentication": {
+      "type": "basic",
+      "credentials": {
+        "username": "us3rn4me",
+        "password": "p4ssw0rd"
+      }
+    },
+    "metadata": {
+      "labels": {"key": "value"},
+      "annotations": {"note": "detailed information"}
+    }
+  }'
+```
+
+```
+Example Response with job
+```
+
+```http
+HTTP/1.1 202 Accepted
+Content-Type: application/json
+Location: https://api.example.org/v3/jobs/af5c57f6-8769-41fa-a499-2c84ed896788
+```
+
+```
+Example Response without job
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+<%= yield_content :single_service_broker %>
+```
+
+This endpoint updates a service broker. Depending on the parameters specified,
+the endpoint may respond with a background job, and it may synchronize the
+service offerings and service plans with those in the broker's catalog.
+
+When a service broker has a synchronization job in progress, only
+updates with `metadata` are permitted until the synchronization job
+is complete.
+
+Parameter | Updates Catalog | Responds with job
+--------- | --------------- | -----------------
+**name** | No | Yes
+**url** | Yes | Yes
+**authentication** | Yes | Yes
+**metadata.labels** | No | No
+**metadata.annotations** | No | No
+
+#### Definition
+`PATCH /v3/service_brokers/:guid`
+
+#### Optional parameters
+
+Name | Type | Description
+---- | ---- | -----------
+**name** | _string_ | Name of the service broker
+**url** | _string_ | URL of the service broker
+**authentication** | [_authentication_](#the-authentication-object) | Credentials used to authenticate against the service broker
+**metadata.labels** | [_label object_](#labels) | Labels applied to the service broker
+**metadata.annotations**  | [_annotation object_](#annotations) | Annotations applied to the service broker
+
+
+<%= yield_content :service_broker_credentials_object %>
+
+#### Permitted roles
+ |
+--- | ---
+Admin |
+Space Developer (only space-scoped brokers) |

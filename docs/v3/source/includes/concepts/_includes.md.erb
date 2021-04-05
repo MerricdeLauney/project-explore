@@ -1,0 +1,124 @@
+## Include
+
+The `include` parameter allows clients to fetch resources and include information of parent objects in the response.
+For example, a response to `/v3/spaces/:guid?include=organization` will contain detailed information about the space and its parent organization.
+
+Developers may choose to use the `include` feature to reduce the number of API calls. The include
+query param can be used with a single resource or a list of resources.
+
+### Resources with includes
+
+The following resources can take an `include` parameter:
+
+Resource | Allowed values
+-------- | --------------
+**apps** | `space.organization`, `space`
+**apps/[:guid]** | `space.organization`, `space`
+**roles** | `user`, `space`, `organization`
+**roles/[:guid]** | `user`, `space`, `organization`
+**routes** | `domain`, `space.organization`, `space`
+**routes/[:guid]** | `domain`, `space.organization`, `space`
+**service_plans** | `space.organization`, `service_offering`
+**service_plans/[:guid]** | `space.organization`, `service_offering`
+**service_credential_bindings** | `app`, `service_instance`
+**service_credential_bindings/[:guid]** | `app`, `service_instance`
+**service_route_bindings** | `route`, `service_instance`
+**service_route_bindings/[:guid]** | `route`, `service_instance`
+**spaces** | `organization`
+**spaces/[:guid]** | `organization`
+
+### Sample requests
+
+
+```
+Example request to apps resource to include parent orgs and spaces
+```
+
+```shell
+curl "https://api.example.org/v3/apps?include=space.organization" \
+  -X GET \
+  -H "Authorization: bearer [token]"
+```
+
+```
+Example response
+```
+
+```json
+{
+   "pagination": {
+     "total_results": 2,
+     "...": "..."
+   },
+   "resources": [
+      {
+         "guid": "42ad8d5a-8124-4fc7-baf2-3f39bfe1c170",
+         "name": "app1",
+         "...": "..."
+      },
+      {
+         "guid": "b90f287b-fcdd-4cbb-9523-1a8dbd2a9837",
+         "name": "app2",
+         "...": "..."
+      }
+   ],
+   "included": {
+      "spaces": [
+         {
+            "guid": "134f95ad-b5eb-4b55-9ce0-b906c513d54b",
+            "name": "space1",
+            "...": "..."
+         },
+         {
+            "guid": "00b76d5c-5176-4cbc-be5d-0bd76363dca9",
+            "name": "space2",
+            "...": "..."
+         }
+      ],
+      "organizations": [
+         {
+            "guid": "b2075a71-28b6-411a-a896-56f75d892f58",
+            "name": "org1",
+            "...": "..."
+         },
+         {
+            "guid": "b56fbd01-296b-442b-8faf-a559aebf985e",
+            "name": "org2",
+            "...": "..."
+         }
+      ]
+   }
+}
+```
+
+```
+Example request for a single app instance to include its parent space
+```
+
+```shell
+curl "https://api.example.org/v3/apps/[guid]?include=space" \
+  -X GET \
+  -H "Authorization: bearer [token]"
+```
+
+```
+Example response
+```
+
+```json
+{
+   "guid": "b90f287b-fcdd-4cbb-9523-1a8dbd2a9837",
+   "name": "staticfile",
+   "...": "..."
+   "included": {
+      "spaces": [
+         {
+            "guid": "00b76d5c-5176-4cbc-be5d-0bd76363dca9",
+            "name": "space1a",
+            "...": "..."
+         }
+      ]
+   }
+}
+```
+

@@ -1,0 +1,233 @@
+---
+local_route: 127.0.0.1
+external_port: 8181
+external_domain: api2.vcap.me
+tls_port: 8183
+pid_filename: /tmp/cloud_controller.8181.pid
+internal_service_hostname: cc.internal.cf
+
+info:
+  name: "vcap"
+  build: "2222"
+  version: 2
+  support_address: "http://support.cloudfoundry.com"
+  description: "Cloud Foundry sponsored by Pivotal"
+  app_ssh_endpoint: "ssh.system.domain.example.com:2222"
+  app_ssh_host_key_fingerprint: "47:0d:d1:c8:c3:3d:0a:36:d1:49:2f:f2:90:27:31:d0"
+  app_ssh_oauth_client: "ssh-proxy"
+
+external_protocol: http
+
+system_domain_organization: the-system-domain-org-name
+system_domain: the-system-domain.com
+app_domains:
+  - name: customer-app-domain1.com
+  - name: customer-app-domain2.com
+
+jobs:
+  global:
+    timeout_in_seconds: 14400
+
+app_usage_events:
+  cutoff_age_in_days: 31
+
+audit_events:
+  cutoff_age_in_days: 31
+
+failed_jobs:
+  cutoff_age_in_days: 31
+
+completed_tasks:
+  cutoff_age_in_days: 31
+
+default_app_memory: 1024 #mb
+default_app_disk_in_mb: 1024
+maximum_app_disk_in_mb: 2048
+
+broker_client_default_async_poll_interval_seconds: 60
+broker_client_max_async_poll_duration_minutes: 10080
+
+uaa:
+  url: "http://localhost:8080/uaa"
+  internal_url: "http://localhost:6789"
+  resource_id: "cloud_controller"
+  symmetric_secret: "tokensecret"
+  ca_file: "spec/fixtures/certs/uaa_ca.crt"
+
+logging:
+  file: /tmp/cloud_controller.8181.log
+  level: fatal # Keep at fatal to avoid lots of extraneous output in tests
+
+loggregator:
+  router: "127.0.0.1:12345"
+
+doppler:
+  url: 'wss://doppler.the-system-domain.com:443'
+
+internal_api:
+  auth_user: internal_user
+  auth_password: internal_password
+
+nginx:
+  use_nginx: false
+  instance_socket: "/var/vcap/sys/run/cloud_controller_ng/cloud_controller.sock"
+
+quota_definitions:
+  default:
+    memory_limit: 10240
+    total_services: 100
+    non_basic_services_allowed: true
+    total_routes: 1000
+
+default_quota_definition: default
+
+shared_isolation_segment_name: 'shared'
+
+resource_pool:
+  resource_directory_key: "cc-resources"
+  fog_connection:
+    provider: Local
+    local_root: /tmp
+
+packages:
+  app_package_directory_key: "cc-packages"
+  fog_connection:
+    provider: Local
+    local_root: /tmp
+
+droplets:
+  droplet_directory_key: "cc-droplets"
+  fog_connection:
+    provider: Local
+    local_root: /tmp
+
+buildpacks:
+  buildpack_directory_key: "cc-buildpacks"
+  fog_connection:
+    provider: Local
+    local_root: /tmp
+
+db_encryption_key: some-key
+
+staging:
+  timeout_in_seconds: 120
+  auth:
+    user: zxsfhgjg
+    password: ZNVfdase9
+
+default_health_check_timeout: 60
+maximum_health_check_timeout: 180
+
+renderer:
+  max_results_per_page: 100
+  default_results_per_page: 50
+  max_inline_relations_depth: 3
+
+security_group_definitions:
+- name: non_allowed
+  rules: []
+
+default_staging_security_groups:
+- non_allowed
+default_running_security_groups:
+- non_allowed
+
+stacks_file: config/stacks.yml
+
+staging:
+  minimum_staging_file_descriptor_limit: 4200
+
+index: 0
+name: api
+resource_pool:
+  maximum_size: 42
+  minimum_size: 1
+  fog_aws_storage_options: {}
+
+buildpacks:
+  fog_aws_storage_options: {}
+
+packages:
+  max_package_size: 42
+  max_valid_packages_stored: 42
+  fog_aws_storage_options: {}
+
+droplets:
+  max_staged_droplets_stored: 42
+  fog_aws_storage_options: {}
+
+request_timeout_in_seconds: 600
+skip_cert_verify: true
+app_bits_upload_grace_period_in_seconds: 500
+security_event_logging:
+  enabled: false
+
+staging:
+  timeout_in_seconds: 42
+  expiration_in_secons: 42
+  minimum_staging_memory_mb: 42
+  minimum_staging_disk_mb: 42
+  minimum_staging_file_descriptor_limit: 42
+  auth:
+    user: 'bob'
+    password: 'laura'
+
+resource_pool:
+  resource_directory_key: ''
+  maximum_size: 42
+  minimum_size: 1
+  fog_connection: {}
+  fog_aws_storage_options: {}
+
+buildpacks:
+  buildpack_directory_key: ''
+  fog_connection: {}
+  fog_aws_storage_options: {}
+
+packages:
+  app_package_directory_key: ''
+  max_package_size: 42
+  max_valid_packages_stored: 42
+  fog_connection: {}
+  fog_aws_storage_options: {}
+
+droplets:
+  droplet_directory_key: ''
+  max_staged_droplets_stored: 42
+  fog_connection: {}
+  fog_aws_storage_options: {}
+
+bits_service:
+  enabled: false
+
+statsd_host: "127.0.0.1"
+statsd_port: 8125
+
+perform_blob_cleanup: false
+
+diego_sync:
+  frequency_in_seconds: 30
+pending_droplets:
+  frequency_in_seconds: 300
+  expiration_in_seconds: 42
+
+pending_builds:
+  expiration_in_seconds: 42
+  frequency_in_seconds: 300
+
+perm:
+  enabled: false
+  hostname: perm.service.cf.internal
+  port: 6283
+  ca_cert_path: spec/fixtures/certs/perm_ca.crt
+  timeout_in_milliseconds: 1000
+
+credhub_api:
+  internal_url: https://credhub.capi.internal:8844
+  external_url: https://credhub.capi.external:8844
+  ca_cert_path: "spec/fixtures/certs/credhub_ca.crt"
+
+credential_references:
+  interpolate_service_bindings: true
+
+threadpool_size: 20

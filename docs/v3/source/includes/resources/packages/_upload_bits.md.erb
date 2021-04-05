@@ -1,0 +1,46 @@
+### Upload package bits
+
+```
+Example Request
+```
+
+```shell
+curl "https://api.example.org/v3/packages/[guid]/upload" \
+  -X POST \
+  -H "Authorization: bearer [token]" \
+  -F bits=@"package.zip" \
+  -F resources='[{"path":"path/to/content.txt","size_in_bytes":123,"checksum": {"value": "b907173290db6a155949ab4dc9b2d019dea0c901"}},{"path":"path/to/code.jar","size_in_bytes":123,"checksum": {"value": "ff84f89760317996b9dd180ab996b079f418396f"}},{"path":"path/to/code.jar","size_in_bytes":123,"checksum": {"value": "ff84f89760317996b9dd180ab996b079f418396f"},"mode":"644"}]'
+```
+
+```
+Example Response
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+<%= yield_content :single_bits_package %>
+```
+
+This upload endpoint takes a multi-part form requests for packages of type `bits`. The request requires either a [.zip file](https://en.wikipedia.org/wiki/Zip_(file_format)) uploaded under the `bits` field or a list of [resource match objects][resource matches] under the `resources` field. These field may be used together.
+
+The `resources` field in the request accepts the v2 resources object format.
+
+#### Definition
+`POST /v3/packages/:guid/upload`
+
+#### Optional parameters
+
+Name | Type | Description | Default
+---- | ---- | ----------- | -------
+**bits** | _form field_ | A binary zip file containing the package bits |
+**resources** | _form field_ | Fingerprints of the application bits that have previously been pushed to Cloud Foundry, formatted as [resource match objects][resource matches]  | `[]`
+
+#### Permitted roles
+ |
+--- | ---
+Admin |
+Space Developer |
+
+[resource matches]: #the-resource-match-object

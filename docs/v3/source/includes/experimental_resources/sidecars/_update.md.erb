@@ -1,0 +1,49 @@
+### Update a sidecar
+
+```
+Example Request
+```
+
+```shell
+curl "https://api.example.org/v3/sidecars/[guid]" \
+  -X PATCH \
+  -H "Authorization: bearer [token]" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "auth-sidecar",
+    "command": "bundle exec rackup",
+    "process_types": ["web", "worker"],
+    "memory_in_mb": 300
+  }'
+
+```
+
+```
+Example Response
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+<%= yield_content :sidecar %>
+```
+
+#### Definition
+`PATCH /v3/sidecars/:guid`
+
+#### Optional parameters
+
+
+Name | Type | Description
+---- | ---- | -----------
+**name** | _string_ | Human-readable name for the sidecar
+**command** | _string_ | The command used to start the sidecar
+**process_types** | _list of strings_  | A list of process types the sidecar applies to
+**memory_in_mb** | _integer_ | Reserved memory for sidecar
+
+#### Permitted roles
+ |
+--- | ---
+Admin |
+Space Developer |

@@ -1,0 +1,39 @@
+### Get a task
+
+```
+Example Request
+```
+
+```shell
+curl "https://api.example.org/v3/tasks/[guid]" \
+  -X GET \
+  -H "Authorization: bearer [token]"
+```
+
+```
+Example Response
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+<%= yield_content :single_task %>
+```
+
+Retrieve a specific task. The `command` field may be excluded
+in the response based on the user's role.
+
+#### Definition
+`GET /v3/tasks/:guid`
+
+#### Permitted roles
+ |
+--- | ---
+Admin Read-Only |
+Admin |
+Global Auditor |
+Org Manager |
+Space Auditor |
+Space Developer |
+Space Manager |

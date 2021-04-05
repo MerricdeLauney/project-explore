@@ -1,0 +1,53 @@
+### List routes for an app
+
+```
+Example Request
+```
+
+```shell
+curl "https://api.example.org/v3/apps/[guid]/routes" \
+  -X GET \
+  -H "Authorization: bearer [token]"
+```
+
+```
+Example Response
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+<%= yield_content :paginated_list_of_routes, '/v3/apps/1cb006ee-fb05-47e1-b541-c34179ddc446/routes' %>
+```
+
+Retrieve all routes that have [destinations](#the-destination-object) that point to the given app.
+
+#### Definition
+`GET /v3/apps/:guid/routes`
+
+#### Query parameters
+
+Name | Type | Description
+---- | ---- | ------------
+**domain_guids** | _list of strings_ | Comma-delimited list of domain guids to filter by
+**hosts** | _list of strings_ | Comma-delimited list of hostnames to filter by
+**organization_guids** | _list of strings_ | Comma-delimited list of organization guids to filter by
+**paths** | _list of strings_ | Comma-delimited list of paths to filter by (e.g. `/path1,/path2`)
+**ports** | _list of integers_ | Comma-delimited list of ports to filter by (e.g. `3306,5432`)
+**space_guids** | _list of strings_ | Comma-delimited list of space guids to filter by
+**page** | _integer_ | Page to display; valid values are integers >= 1
+**per_page** | _integer_ | Number of results per page; <br>valid values are 1 through 5000
+**order_by** | _string_ | Value to sort by. Defaults to ascending; prepend with `-` to sort descending. <br>Valid values are `created_at`, `updated_at`
+**label_selector** | _string_ | A query string containing a list of [label selector](#labels-and-selectors) requirements
+
+#### Permitted roles
+ |
+--- | ---
+Admin |
+Admin Read-Only |
+Global Auditor |
+Org Manager |
+Space Auditor |
+Space Developer |
+Space Manager |

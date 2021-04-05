@@ -1,0 +1,45 @@
+### Get a route
+
+```
+Example Request
+```
+
+```shell
+curl "https://api.example.org/v3/routes/[guid]" \
+  -X GET \
+  -H "Authorization: bearer [token]"
+```
+
+```
+Example Response
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+<%= yield_content :single_route %>
+```
+
+#### Definition
+`GET /v3/routes/:guid`
+
+#### Query parameters
+
+Name | Type | Description
+---- | ---- | ------------
+**include** | _string_ | Optionally include additional related resources in the response <br>Valid values are `domain`, `space.organization`, `space`
+
+#### Permitted roles
+
+Role  | Notes
+--- | ---
+Admin Read-Only |
+Admin |
+Global Auditor |
+Org Auditor |
+Org Manager |
+Space Auditor |
+Space Developer |
+Space Manager |
+

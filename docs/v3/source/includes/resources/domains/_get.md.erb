@@ -1,0 +1,39 @@
+### Get a domain
+
+```
+Example Request
+```
+
+```shell
+curl "https://api.example.org/v3/domains/[guid]" \
+  -X GET \
+  -H "Authorization: bearer [token]"
+```
+
+```
+Example Response
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+<%= yield_content :single_domain %>
+```
+
+#### Definition
+`GET /v3/domains/:guid`
+
+#### Permitted roles
+
+ Roles | Notes
+--- | ---
+Admin Read-Only |
+Admin |
+Global Auditor |
+Org Auditor |
+Org Billing Manager | Can only view domains without an organization relationship
+Org Manager |
+Space Auditor |
+Space Developer |
+Space Manager |

@@ -1,0 +1,30 @@
+{
+  "name": "api-docs",
+  "version": "1.0.0",
+  "description": "Cloud Foundry API Docs ========",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/gulp",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "checkdocs": "./node_modules/.bin/gulp checkdocs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cloudfoundry-incubator/api-docs.git"
+  },
+  "author": "Cloud Foundry",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/cloudfoundry-incubator/api-docs/issues"
+  },
+  "homepage": "https://github.com/cloudfoundry-incubator/api-docs#readme",
+  "devDependencies": {
+    "check-pages": "^0.10.0",
+    "cheerio": "^1.0.0-rc.5",
+    "express": "^4.17.1",
+    "glob": "^7.1.6",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.3.0"
+  },
+  "dependencies": {}
+}
